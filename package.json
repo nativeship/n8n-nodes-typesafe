@@ -1,0 +1,56 @@
+{
+  "author": {
+    "name": "nativeship",
+    "url": "https://github.com/nativeship"
+  },
+  "description": "Evaluate content with fast probabilistic checks, classifications, and custom scoring rubrics using TypeSafe AI",
+  "devDependencies": {
+    "@n8n/node-cli": "0.41.2",
+    "@types/node": "22.15.29",
+    "eslint": "9.29.0",
+    "prettier": "3.6.2",
+    "typescript": "5.9.3"
+  },
+  "engines": {
+    "node": "\u003e=22.22.0"
+  },
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://github.com/nativeship/n8n-nodes-typesafe",
+  "keywords": [
+    "n8n-community-node-package"
+  ],
+  "license": "MIT",
+  "n8n": {
+    "credentials": [
+      "dist/credentials/TypesafeApi.credentials.js"
+    ],
+    "n8nNodesApiVersion": 1,
+    "nodes": [
+      "dist/nodes/Typesafe/Typesafe.node.js"
+    ],
+    "strict": true
+  },
+  "name": "@nativeship/n8n-nodes-typesafe",
+  "nativeShip": {
+    "artifactSha256": "da343fea90c98f4684a747d49ef72efe950eb8d1b5e9bc0b4999f9d5360d0d30"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nativeship/n8n-nodes-typesafe.git"
+  },
+  "scripts": {
+    "build": "n8n-node build",
+    "dev": "n8n-node dev",
+    "lint": "n8n-node lint",
+    "lint:fix": "n8n-node lint --fix"
+  },
+  "version": "1.0.0"
+}

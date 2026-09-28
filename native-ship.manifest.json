@@ -1,0 +1,316 @@
+{
+  "schemaVersion": 2,
+  "style": "programmatic",
+  "names": {
+    "typeName": "Typesafe",
+    "nodeName": "typesafe",
+    "descriptionName": "typesafe",
+    "hasTriggers": false,
+    "nodeFiles": [
+      "dist/nodes/Typesafe/Typesafe.node.js"
+    ],
+    "credentialFiles": [
+      "dist/credentials/TypesafeApi.credentials.js"
+    ]
+  },
+  "target": {
+    "targetN8nRange": ">=1.110 <2.0",
+    "declarative": true,
+    "programmatic": true,
+    "fullVersioning": true
+  },
+  "versioning": "light",
+  "versions": [
+    1
+  ],
+  "diagnostics": [
+    {
+      "severity": "warning",
+      "code": "NF_SERVER_SELECTION",
+      "location": "/servers",
+      "explanation": "The specification does not declare a server URL; generated routing uses a configurable self-hosted destination.",
+      "resolution": "Set the generated node's HTTPS Destination URL to the API host before executing it."
+    }
+  ],
+  "operationContracts": [
+    {
+      "operationId": "models_v1_v1_models_get",
+      "method": "GET",
+      "path": "/v1/models",
+      "serverId": "selfHosted",
+      "authentication": [
+        {
+          "schemes": [
+            "HTTPBearer"
+          ],
+          "scopes": []
+        }
+      ],
+      "parameters": [],
+      "request": {
+        "contentType": "application/json",
+        "representation": "structured",
+        "fields": []
+      },
+      "retry": {},
+      "pagination": {
+        "style": "none"
+      },
+      "response": {
+        "fields": [
+          {
+            "name": "models",
+            "type": "array"
+          }
+        ],
+        "simplifiedFields": [
+          "models"
+        ]
+      },
+      "errors": [
+        {
+          "status": "422",
+          "title": "Validation Error"
+        }
+      ],
+      "requestPlan": {
+        "operationId": "models_v1_v1_models_get",
+        "method": "GET",
+        "path": "/v1/models",
+        "serverId": "selfHosted",
+        "request": {
+          "method": "GET",
+          "url": "=/v1/models",
+          "query": [],
+          "body": [],
+          "headers": {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+          }
+        },
+        "authentication": [
+          {
+            "schemes": [
+              "HTTPBearer"
+            ],
+            "scopes": []
+          }
+        ],
+        "retry": {},
+        "pagination": {
+          "style": "none"
+        },
+        "response": {
+          "fields": [
+            {
+              "name": "models",
+              "type": "array"
+            }
+          ],
+          "simplifiedFields": [
+            "models"
+          ]
+        },
+        "errors": [
+          {
+            "status": "422",
+            "title": "Validation Error"
+          }
+        ],
+        "unsupportedSemantics": []
+      }
+    },
+    {
+      "operationId": "systemone_v1_systemone_post",
+      "method": "POST",
+      "path": "/v1/systemone",
+      "serverId": "selfHosted",
+      "authentication": [
+        {
+          "schemes": [
+            "HTTPBearer"
+          ],
+          "scopes": []
+        }
+      ],
+      "parameters": [],
+      "request": {
+        "contentType": "application/json",
+        "representation": "structured",
+        "fields": [
+          {
+            "name": "model",
+            "inputName": "model",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "questions",
+            "inputName": "questions",
+            "type": "object",
+            "required": true
+          },
+          {
+            "name": "state",
+            "inputName": "state",
+            "type": "alternative",
+            "required": true
+          }
+        ]
+      },
+      "retry": {},
+      "pagination": {
+        "style": "none"
+      },
+      "response": {
+        "fields": [
+          {
+            "name": "answers",
+            "type": "object"
+          },
+          {
+            "name": "model",
+            "type": "string"
+          },
+          {
+            "name": "usage",
+            "type": "object"
+          }
+        ],
+        "simplifiedFields": [
+          "answers",
+          "model",
+          "usage"
+        ]
+      },
+      "errors": [
+        {
+          "status": "422",
+          "title": "Validation Error"
+        }
+      ],
+      "requestPlan": {
+        "operationId": "systemone_v1_systemone_post",
+        "method": "POST",
+        "path": "/v1/systemone",
+        "serverId": "selfHosted",
+        "request": {
+          "method": "POST",
+          "url": "=/v1/systemone",
+          "query": [],
+          "body": [
+            {
+              "name": "model",
+              "source": "parameter"
+            },
+            {
+              "name": "questions",
+              "source": "parameter"
+            },
+            {
+              "name": "state",
+              "source": "parameter"
+            }
+          ],
+          "headers": {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+          }
+        },
+        "authentication": [
+          {
+            "schemes": [
+              "HTTPBearer"
+            ],
+            "scopes": []
+          }
+        ],
+        "retry": {},
+        "pagination": {
+          "style": "none"
+        },
+        "response": {
+          "fields": [
+            {
+              "name": "answers",
+              "type": "object"
+            },
+            {
+              "name": "model",
+              "type": "string"
+            },
+            {
+              "name": "usage",
+              "type": "object"
+            }
+          ],
+          "simplifiedFields": [
+            "answers",
+            "model",
+            "usage"
+          ]
+        },
+        "errors": [
+          {
+            "status": "422",
+            "title": "Validation Error"
+          }
+        ],
+        "unsupportedSemantics": [
+          "advanced parameter questions",
+          "advanced parameter state"
+        ]
+      }
+    }
+  ],
+  "presentationProfile": {
+    "version": 1,
+    "title": "TypeSafe",
+    "description": "Evaluate content with fast probabilistic checks, classifications, and custom scoring rubrics using TypeSafe AI",
+    "documentationUrl": "https://nativeship.io/nodes/@nativeship/n8n-nodes-typesafe",
+    "artwork": {
+      "iconData": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 64 64\" width=\"64\" height=\"64\" role=\"img\" aria-label=\"TypeSafe\">\n  <style>\n    .m {\n      fill: none;\n      stroke: #000;\n      stroke-width: 2.81;\n      stroke-linecap: round;\n      stroke-linejoin: round;\n    }\n  </style>\n  <g class=\"m\">\n    <path d=\"M11.22 14L32 2\"/>\n    <path d=\"M21.61 20L32 14\"/>\n    <path d=\"M11.22 38L21.61 32\"/>\n    <path d=\"M32 26L42.39 20\"/>\n    <path d=\"M21.61 44L32 38\"/>\n    <path d=\"M21.61 56L42.39 44\"/>\n    <path d=\"M32 62L52.78 50\"/>\n    <path d=\"M32 2L42.39 8\"/>\n    <path d=\"M32 14L52.78 26\"/>\n    <path d=\"M21.61 20L32 26\"/>\n    <path d=\"M21.61 32L32 38\"/>\n    <path d=\"M42.39 44L52.78 50\"/>\n    <path d=\"M11.22 38L21.61 44\"/>\n    <path d=\"M21.61 56L32 62\"/>\n    <path d=\"M52.78 26L52.78 50\"/>\n    <path d=\"M42.39 8L42.39 44\"/>\n    <path d=\"M32 2L32 14\"/>\n    <path d=\"M32 26L32 38\"/>\n    <path d=\"M21.61 20L21.61 32\"/>\n    <path d=\"M21.61 44L21.61 56\"/>\n    <path d=\"M11.22 14L11.22 38\"/>\n  </g>\n</svg>",
+      "iconDarkData": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 64 64\" width=\"64\" height=\"64\" role=\"img\" aria-label=\"TypeSafe\">\n  <style>\n    .m {\n      fill: none;\n      stroke: #fff;\n      stroke-width: 2.81;\n      stroke-linecap: round;\n      stroke-linejoin: round;\n    }\n  </style>\n  <g class=\"m\">\n    <path d=\"M11.22 14L32 2\"/>\n    <path d=\"M21.61 20L32 14\"/>\n    <path d=\"M11.22 38L21.61 32\"/>\n    <path d=\"M32 26L42.39 20\"/>\n    <path d=\"M21.61 44L32 38\"/>\n    <path d=\"M21.61 56L42.39 44\"/>\n    <path d=\"M32 62L52.78 50\"/>\n    <path d=\"M32 2L42.39 8\"/>\n    <path d=\"M32 14L52.78 26\"/>\n    <path d=\"M21.61 20L32 26\"/>\n    <path d=\"M21.61 32L32 38\"/>\n    <path d=\"M42.39 44L52.78 50\"/>\n    <path d=\"M11.22 38L21.61 44\"/>\n    <path d=\"M21.61 56L32 62\"/>\n    <path d=\"M52.78 26L52.78 50\"/>\n    <path d=\"M42.39 8L42.39 44\"/>\n    <path d=\"M32 2L32 14\"/>\n    <path d=\"M32 26L32 38\"/>\n    <path d=\"M21.61 20L21.61 32\"/>\n    <path d=\"M21.61 44L21.61 56\"/>\n    <path d=\"M11.22 14L11.22 38\"/>\n  </g>\n</svg>"
+    },
+    "resources": {
+      "v1": {
+        "source": {
+          "name": "v1"
+        },
+        "displayName": "Evaluation & Models"
+      }
+    },
+    "operations": {
+      "models_v1_v1_models_get": {
+        "source": {
+          "id": "models_v1_v1_models_get",
+          "method": "GET",
+          "path": "/v1/models"
+        },
+        "displayName": "Get Many Models",
+        "description": "Retrieves the list of available model names and aliases supported for evaluation requests.",
+        "hidden": false,
+        "resource": "v1"
+      },
+      "systemone_v1_systemone_post": {
+        "source": {
+          "id": "systemone_v1_systemone_post",
+          "method": "POST",
+          "path": "/v1/systemone"
+        },
+        "displayName": "Evaluate Content",
+        "description": "Evaluates content against one or more questions (yes/no, choices, or scoring rubrics) and returns structured probabilities",
+        "hidden": false,
+        "resource": "v1"
+      }
+    },
+    "credentials": {
+      "HTTPBearer": {
+        "source": {
+          "id": "HTTPBearer",
+          "type": "bearer"
+        }
+      }
+    }
+  }
+}

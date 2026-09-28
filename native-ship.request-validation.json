@@ -1,0 +1,251 @@
+{
+  "schemaVersion": 1,
+  "fixtures": [
+    {
+      "operationId": "models_v1_v1_models_get",
+      "method": "GET",
+      "path": "/v1/models",
+      "serverId": "selfHosted",
+      "authentication": [
+        {
+          "schemes": [
+            "HTTPBearer"
+          ],
+          "scopes": []
+        }
+      ],
+      "parameters": [],
+      "request": {
+        "contentType": "application/json",
+        "representation": "structured",
+        "fields": []
+      },
+      "retry": {},
+      "pagination": {
+        "style": "none"
+      },
+      "response": {
+        "fields": [
+          {
+            "name": "models",
+            "type": "array"
+          }
+        ],
+        "simplifiedFields": [
+          "models"
+        ]
+      },
+      "errors": [
+        {
+          "status": "422",
+          "title": "Validation Error"
+        }
+      ],
+      "requestPlan": {
+        "operationId": "models_v1_v1_models_get",
+        "method": "GET",
+        "path": "/v1/models",
+        "serverId": "selfHosted",
+        "request": {
+          "method": "GET",
+          "url": "=/v1/models",
+          "query": [],
+          "body": [],
+          "headers": {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+          }
+        },
+        "authentication": [
+          {
+            "schemes": [
+              "HTTPBearer"
+            ],
+            "scopes": []
+          }
+        ],
+        "retry": {},
+        "pagination": {
+          "style": "none"
+        },
+        "response": {
+          "fields": [
+            {
+              "name": "models",
+              "type": "array"
+            }
+          ],
+          "simplifiedFields": [
+            "models"
+          ]
+        },
+        "errors": [
+          {
+            "status": "422",
+            "title": "Validation Error"
+          }
+        ],
+        "unsupportedSemantics": []
+      },
+      "assertions": [
+        "retry attempts preserve request and pagination state until a response succeeds",
+        "pagination advances only after a completed page response",
+        "pagination terminates within declared page, item, elapsed-time, memory, repeated-cursor, and repeated-page budgets"
+      ]
+    },
+    {
+      "operationId": "systemone_v1_systemone_post",
+      "method": "POST",
+      "path": "/v1/systemone",
+      "serverId": "selfHosted",
+      "authentication": [
+        {
+          "schemes": [
+            "HTTPBearer"
+          ],
+          "scopes": []
+        }
+      ],
+      "parameters": [],
+      "request": {
+        "contentType": "application/json",
+        "representation": "structured",
+        "fields": [
+          {
+            "name": "model",
+            "inputName": "model",
+            "sample": "value/id",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "questions",
+            "inputName": "questions",
+            "sample": {},
+            "type": "object",
+            "required": true
+          },
+          {
+            "name": "state",
+            "inputName": "state",
+            "sample": {
+              "schemaAlternative": "alternative1",
+              "value": "value/id"
+            },
+            "type": "alternative",
+            "required": true
+          }
+        ]
+      },
+      "retry": {},
+      "pagination": {
+        "style": "none"
+      },
+      "response": {
+        "fields": [
+          {
+            "name": "answers",
+            "type": "object"
+          },
+          {
+            "name": "model",
+            "type": "string"
+          },
+          {
+            "name": "usage",
+            "type": "object"
+          }
+        ],
+        "simplifiedFields": [
+          "answers",
+          "model",
+          "usage"
+        ]
+      },
+      "errors": [
+        {
+          "status": "422",
+          "title": "Validation Error"
+        }
+      ],
+      "requestPlan": {
+        "operationId": "systemone_v1_systemone_post",
+        "method": "POST",
+        "path": "/v1/systemone",
+        "serverId": "selfHosted",
+        "request": {
+          "method": "POST",
+          "url": "=/v1/systemone",
+          "query": [],
+          "body": [
+            {
+              "name": "model",
+              "source": "parameter"
+            },
+            {
+              "name": "questions",
+              "source": "parameter"
+            },
+            {
+              "name": "state",
+              "source": "parameter"
+            }
+          ],
+          "headers": {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+          }
+        },
+        "authentication": [
+          {
+            "schemes": [
+              "HTTPBearer"
+            ],
+            "scopes": []
+          }
+        ],
+        "retry": {},
+        "pagination": {
+          "style": "none"
+        },
+        "response": {
+          "fields": [
+            {
+              "name": "answers",
+              "type": "object"
+            },
+            {
+              "name": "model",
+              "type": "string"
+            },
+            {
+              "name": "usage",
+              "type": "object"
+            }
+          ],
+          "simplifiedFields": [
+            "answers",
+            "model",
+            "usage"
+          ]
+        },
+        "errors": [
+          {
+            "status": "422",
+            "title": "Validation Error"
+          }
+        ],
+        "unsupportedSemantics": [
+          "advanced parameter questions",
+          "advanced parameter state"
+        ]
+      },
+      "assertions": [
+        "retry attempts preserve request and pagination state until a response succeeds",
+        "pagination advances only after a completed page response",
+        "pagination terminates within declared page, item, elapsed-time, memory, repeated-cursor, and repeated-page budgets"
+      ]
+    }
+  ],
+  "triggerFixtures": []
+}
