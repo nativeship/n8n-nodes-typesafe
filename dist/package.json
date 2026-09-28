@@ -1,6 +1,6 @@
 {
     "author": {
-        "email": "work.bhshekhaliya@gmail.com",
+        "email": "hello@nativeship.io",
         "name": "Administrator"
     },
     "description": "Evaluate content with fast probabilistic checks, classifications, and custom scoring rubrics using TypeSafe AI",
@@ -17,9 +17,14 @@
     "files": [
         "dist"
     ],
-    "homepage": "https://nativeship.io/nodes/@nativeship/n8n-nodes-typesafe",
+    "homepage": "https://docs.typesafe.ai/primitives?utm_source=n8n_app\u0026utm_medium=node_settings_modal-credential_link\u0026utm_campaign=@nativeship/n8n-nodes-typesafe",
     "keywords": [
-        "n8n-community-node-package"
+        "n8n-community-node-package",
+        "n8n",
+        "jev",
+        "typesafe-ai",
+        "typesafe-jev",
+        "ai-classification"
     ],
     "license": "MIT",
     "n8n": {

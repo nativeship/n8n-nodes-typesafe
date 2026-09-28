@@ -1,5 +1,6 @@
 {
   "author": {
+    "email": "hello@nativeship.io",
     "name": "nativeship",
     "url": "https://github.com/nativeship"
   },
@@ -19,7 +20,12 @@
   ],
   "homepage": "https://github.com/nativeship/n8n-nodes-typesafe",
   "keywords": [
-    "n8n-community-node-package"
+    "n8n-community-node-package",
+    "n8n",
+    "jev",
+    "typesafe-ai",
+    "typesafe-jev",
+    "ai-classification"
   ],
   "license": "MIT",
   "maintainers": [
@@ -39,7 +45,7 @@
   },
   "name": "@nativeship/n8n-nodes-typesafe",
   "nativeShip": {
-    "artifactSha256": "da343fea90c98f4684a747d49ef72efe950eb8d1b5e9bc0b4999f9d5360d0d30"
+    "artifactSha256": "0edb62335e3ecfbfcec529d190efe47a77743e8206ed65dfe4bebe1d19953b7c"
   },
   "peerDependencies": {
     "n8n-workflow": "*"
@@ -57,5 +63,5 @@
     "lint": "n8n-node lint",
     "lint:fix": "n8n-node lint --fix"
   },
-  "version": "1.0.1"
+  "version": "2.0.0"
 }

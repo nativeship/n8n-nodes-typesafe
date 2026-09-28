@@ -163,9 +163,10 @@ class Typesafe {
             ],
             subtitle: "={{$parameter[\"operation\"] + \": \" + $parameter[\"resource\"]}}",
             description: "Evaluate content with fast probabilistic checks, classifications, and custom scoring rubrics using TypeSafe AI",
+            documentationUrl: "https://docs.typesafe.ai/primitives?utm_source=n8n_app&utm_medium=node_settings_modal-credential_link&utm_campaign=@nativeship/n8n-nodes-typesafe",
             hints: [
                 {
-                    message: "The specification does not declare a server URL; generated routing uses a configurable self-hosted destination. Set the generated node's HTTPS Destination URL to the API host before executing it.",
+                    message: "Authentication scheme \"HTTPBearer\" is referenced but not declared; generated credentials use the inferred fallback \"bearer\". Declare the security scheme explicitly to preserve the provider's exact authentication contract.",
                     type: "warning",
                     location: "inputPane",
                     whenToDisplay: "always"
@@ -213,47 +214,19 @@ class Typesafe {
                             ]
                         }
                     },
-                    default: "models_v1_v1_models_get",
+                    default: "evaluateContent",
                     options: [
                         {
-                            name: "Evaluate Content",
-                            value: "systemone_v1_systemone_post",
-                            action: "Evaluate content evaluation models",
-                            description: "Evaluates content against one or more questions (yes/no, choices, or scoring rubrics) and returns structured probabilities. evaluation & models."
+                            name: "Ask Questions",
+                            value: "evaluateContent",
+                            action: "Ask questions evaluation models",
+                            description: "Evaluate provided content (state) by asking one or more questions. you can mix question types (yes/no, multiple-choice, or scoring) in a single request. the answers are returned mapped to your specific question keys. evaluation & models."
                         },
                         {
-                            name: "Get Many Models",
-                            value: "models_v1_v1_models_get",
-                            action: "Get many models evaluation models",
-                            description: "Retrieves the list of available model names and aliases supported for evaluation requests. evaluation & models."
-                        }
-                    ]
-                },
-                {
-                    displayName: "Options",
-                    name: "options",
-                    type: "collection",
-                    placeholder: "Add Option",
-                    default: {},
-                    displayOptions: {
-                        show: {
-                            resource: [
-                                "v1"
-                            ],
-                            operation: [
-                                "models_v1_v1_models_get"
-                            ]
-                        }
-                    },
-                    options: [
-                        {
-                            displayName: "Destination URL",
-                            name: "server_selfHosted_baseUrl",
-                            type: "string",
-                            default: "https://api.example.com",
-                            description: "HTTPS destination URL for the API",
-                            placeholder: "https://api.example.com",
-                            validateType: "url"
+                            name: "List Models",
+                            value: "listModels",
+                            action: "List models evaluation models",
+                            description: "Retrieve a list of all available ai models and their metadata for your authenticated account. use the returned model names in the evaluate content action. evaluation & models."
                         }
                     ]
                 },
@@ -263,14 +236,14 @@ class Typesafe {
                     type: "string",
                     default: "",
                     required: true,
-                    description: "Name or alias of the model to use. available names are returned by get /v1/models.",
+                    description: "The specified system one model or alias responsible for evaluation (e.g., 'jev-latest'). you can find valid models via the list models operation.",
                     displayOptions: {
                         show: {
                             resource: [
                                 "v1"
                             ],
                             operation: [
-                                "systemone_v1_systemone_post"
+                                "evaluateContent"
                             ]
                         }
                     }
@@ -281,14 +254,14 @@ class Typesafe {
                     type: "json",
                     default: {},
                     required: true,
-                    description: "Questions to ask about the content, each with a name you choose. the response uses those names to identify the answers.",
+                    description: "A dictionary object of the questions you want to ask. the keys you define here (e.g., 'is_security_risk') will be used in the response payload to map back the answers.",
                     displayOptions: {
                         show: {
                             resource: [
                                 "v1"
                             ],
                             operation: [
-                                "systemone_v1_systemone_post"
+                                "evaluateContent"
                             ]
                         }
                     }
@@ -302,45 +275,17 @@ class Typesafe {
                         value: ""
                     },
                     required: true,
-                    description: "The content all questions in this request refer to",
+                    description: "The raw data, text, or content that all requested questions will be evaluated against. structured JSON is supported.",
                     displayOptions: {
                         show: {
                             resource: [
                                 "v1"
                             ],
                             operation: [
-                                "systemone_v1_systemone_post"
+                                "evaluateContent"
                             ]
                         }
                     }
-                },
-                {
-                    displayName: "Options",
-                    name: "options",
-                    type: "collection",
-                    placeholder: "Add Option",
-                    default: {},
-                    displayOptions: {
-                        show: {
-                            resource: [
-                                "v1"
-                            ],
-                            operation: [
-                                "systemone_v1_systemone_post"
-                            ]
-                        }
-                    },
-                    options: [
-                        {
-                            displayName: "Destination URL",
-                            name: "server_selfHosted_baseUrl",
-                            type: "string",
-                            default: "https://api.example.com",
-                            description: "HTTPS destination URL for the API",
-                            placeholder: "https://api.example.com",
-                            validateType: "url"
-                        }
-                    ]
                 }
             ]
         };
@@ -362,34 +307,34 @@ class Typesafe {
                 let pagination = { style: 'none', advancement: '', maxPages: 1, maxItems: Number.POSITIVE_INFINITY, maxElapsedMs: 30000, maxMemoryBytes: 10 * 1024 * 1024, repeatedCursorLimit: 1, repeatedPageLimit: 1, pageSize: 100 };
                 let responsePlan = { binary: false, full: false, envelopePath: "", itemPath: "", fields: [], simplified: [] };
                 switch (operation) {
-                    case "models_v1_v1_models_get": {
-                        const path = "/v1/models";
-                        const qs = {};
-                        const body = {};
-                        const serverBaseUrl = (0, http_1.resolveServerBaseUrl)(this, [{ "id": "selfHosted", "url": "{baseUrl}", "kind": "selfHosted", "variables": [{ "name": "baseUrl", "default": "https://api.example.com", "enum": [] }] }], "selfHosted", nodeOptions, false);
-                        options = { method: "GET", url: serverBaseUrl.url + path, qs, body: body, json: true, arrayFormat: "indices", ...(serverBaseUrl.blockRedirects ? { maxRedirects: 0 } : {}) };
-                        credentialApplications = ([{ "credentialType": "typesafeApi", "type": "bearer" }]);
-                        retryContract = { mode: "none", retryConnectionFailures: false, retryTimeouts: false, retryRateLimits: false, retryServerErrors: false, maxAttempts: 1, maxElapsedMs: 30000, baseBackoffMs: 500, maxBackoffMs: 5000, jitterRatio: 0.2, idempotency: undefined };
-                        pagination = { style: "none", page: "", limit: "", cursor: "", responseCursor: "", hasMore: "", itemPath: "", advancement: "", maxPages: 1, maxItems: Number.POSITIVE_INFINITY, maxElapsedMs: 30000, maxMemoryBytes: 10485760, repeatedCursorLimit: 1, repeatedPageLimit: 1, pageSize: 100 };
-                        responsePlan = { binary: false, full: false, envelopePath: "", itemPath: "", fields: ["models"], simplified: ["models"] };
-                        errorPlan = { "422": { "title": "Validation Error" } };
-                        break;
-                    }
-                    case "systemone_v1_systemone_post": {
+                    case "evaluateContent": {
                         const path = "/v1/systemone";
                         const qs = {};
                         const headers = {};
                         const body = {};
-                        setBodyField(body, { "name": "model", "displayName": "Model", "type": "string", "required": true, "description": "Name or alias of the model to use. Available names are returned by GET /v1/models." }, this.getNodeParameter("model", itemIndex), this, itemIndex);
-                        setBodyField(body, { "name": "questions", "displayName": "Questions", "type": "object", "required": true, "description": "Questions to ask about the content, each with a name you choose. The response uses those names to identify the answers.", "additionalValue": { "name": "value", "displayName": "Value", "type": "alternative", "description": "A question about the supplied content.", "alternatives": [{ "name": "alternative1", "displayName": "Alternative1", "type": "string" }, { "name": "alternative2", "displayName": "Alternative2", "type": "string" }, { "name": "alternative3", "displayName": "Alternative3", "type": "string" }], "composition": "oneOf", "representation": "raw" }, "representation": "raw" }, this.getNodeParameter("questions", itemIndex), this, itemIndex);
-                        setBodyField(body, { "name": "state", "displayName": "State", "type": "alternative", "required": true, "description": "The content all questions in this request refer to.", "alternatives": [{ "name": "alternative1", "displayName": "Alternative1", "type": "string" }, { "name": "alternative2", "displayName": "Alternative2", "type": "object", "additionalValue": { "name": "value", "displayName": "Value", "type": "any" }, "representation": "raw" }, { "name": "alternative3", "displayName": "Alternative3", "type": "array", "items": { "name": "item", "displayName": "Item", "type": "string" }, "representation": "raw" }], "composition": "anyOf", "representation": "raw" }, this.getNodeParameter("state", itemIndex), this, itemIndex);
-                        const serverBaseUrl = (0, http_1.resolveServerBaseUrl)(this, [{ "id": "selfHosted", "url": "{baseUrl}", "kind": "selfHosted", "variables": [{ "name": "baseUrl", "default": "https://api.example.com", "enum": [] }] }], "selfHosted", nodeOptions, false);
+                        setBodyField(body, { "name": "model", "displayName": "Model", "type": "string", "required": true, "description": "The specified System One model or alias responsible for evaluation (e.g., 'jev-latest'). You can find valid models via the List Models operation." }, this.getNodeParameter("model", itemIndex), this, itemIndex);
+                        setBodyField(body, { "name": "questions", "displayName": "Questions", "type": "object", "required": true, "description": "A dictionary object of the questions you want to ask. The keys you define here (e.g., 'is_security_risk') will be used in the response payload to map back the answers.", "additionalValue": { "name": "value", "displayName": "Value", "type": "alternative", "description": "A specific evaluation task (noul, choice, or score) applied to the provided content.", "alternatives": [{ "name": "alternative1", "displayName": "Alternative1", "type": "string" }, { "name": "alternative2", "displayName": "Alternative2", "type": "string" }, { "name": "alternative3", "displayName": "Alternative3", "type": "string" }], "composition": "oneOf", "representation": "raw" }, "representation": "raw" }, this.getNodeParameter("questions", itemIndex), this, itemIndex);
+                        setBodyField(body, { "name": "state", "displayName": "State", "type": "alternative", "required": true, "description": "The raw data, text, or content that all requested questions will be evaluated against. Structured JSON is supported.", "alternatives": [{ "name": "alternative1", "displayName": "Alternative1", "type": "string" }, { "name": "alternative2", "displayName": "Alternative2", "type": "object", "additionalValue": { "name": "value", "displayName": "Value", "type": "any" }, "representation": "raw" }, { "name": "alternative3", "displayName": "Alternative3", "type": "array", "items": { "name": "item", "displayName": "Item", "type": "string" }, "representation": "raw" }], "composition": "anyOf", "representation": "raw" }, this.getNodeParameter("state", itemIndex), this, itemIndex);
+                        const serverBaseUrl = (0, http_1.resolveServerBaseUrl)(this, [{ "id": "documentServer1HttpsApiTypesafeAi", "url": "https://api.typesafe.ai", "kind": "selectable", "variables": [] }], "documentServer1HttpsApiTypesafeAi", nodeOptions, false);
                         options = { method: "POST", url: serverBaseUrl.url + path, qs, headers: { ...headers, ...{ 'Content-Type': "application/json" } }, body: body, json: true, arrayFormat: "indices", ...(serverBaseUrl.blockRedirects ? { maxRedirects: 0 } : {}) };
                         credentialApplications = ([{ "credentialType": "typesafeApi", "type": "bearer" }]);
                         retryContract = { mode: "none", retryConnectionFailures: false, retryTimeouts: false, retryRateLimits: false, retryServerErrors: false, maxAttempts: 1, maxElapsedMs: 30000, baseBackoffMs: 500, maxBackoffMs: 5000, jitterRatio: 0.2, idempotency: undefined };
                         pagination = { style: "none", page: "", limit: "", cursor: "", responseCursor: "", hasMore: "", itemPath: "", advancement: "", maxPages: 1, maxItems: Number.POSITIVE_INFINITY, maxElapsedMs: 30000, maxMemoryBytes: 10485760, repeatedCursorLimit: 1, repeatedPageLimit: 1, pageSize: 100 };
                         responsePlan = { binary: false, full: false, envelopePath: "", itemPath: "", fields: ["answers", "model", "usage"], simplified: ["answers", "model", "usage"] };
-                        errorPlan = { "422": { "title": "Validation Error" } };
+                        errorPlan = { "422": { "title": "Validation Error resulting from an invalid request format." } };
+                        break;
+                    }
+                    case "listModels": {
+                        const path = "/v1/models";
+                        const qs = {};
+                        const body = {};
+                        const serverBaseUrl = (0, http_1.resolveServerBaseUrl)(this, [{ "id": "documentServer1HttpsApiTypesafeAi", "url": "https://api.typesafe.ai", "kind": "selectable", "variables": [] }], "documentServer1HttpsApiTypesafeAi", nodeOptions, false);
+                        options = { method: "GET", url: serverBaseUrl.url + path, qs, body: body, json: true, arrayFormat: "indices", ...(serverBaseUrl.blockRedirects ? { maxRedirects: 0 } : {}) };
+                        credentialApplications = ([{ "credentialType": "typesafeApi", "type": "bearer" }]);
+                        retryContract = { mode: "none", retryConnectionFailures: false, retryTimeouts: false, retryRateLimits: false, retryServerErrors: false, maxAttempts: 1, maxElapsedMs: 30000, baseBackoffMs: 500, maxBackoffMs: 5000, jitterRatio: 0.2, idempotency: undefined };
+                        pagination = { style: "none", page: "", limit: "", cursor: "", responseCursor: "", hasMore: "", itemPath: "", advancement: "", maxPages: 1, maxItems: Number.POSITIVE_INFINITY, maxElapsedMs: 30000, maxMemoryBytes: 10485760, repeatedCursorLimit: 1, repeatedPageLimit: 1, pageSize: 100 };
+                        responsePlan = { binary: false, full: false, envelopePath: "", itemPath: "", fields: ["models"], simplified: ["models"] };
+                        errorPlan = { "422": { "title": "Validation Error." } };
                         break;
                     }
                     default: throw new n8n_workflow_1.NodeOperationError(this.getNode(), `Unsupported operation ${operation} for node version ${nodeVersion}`, { itemIndex });

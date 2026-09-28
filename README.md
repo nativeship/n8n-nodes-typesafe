@@ -10,10 +10,10 @@ Configure the generated bearer token credential in n8n before using the node.
 
 ## Supported operations
 
-- `GET /v1/models` - Get Many Models
+- `POST /v1/systemone` - Ask Questions
   - Retry Contract: none
   - Pagination Contract: none
-- `POST /v1/systemone` - Evaluate Content
+- `GET /v1/models` - List Models
   - Retry Contract: none
   - Pagination Contract: none
 
