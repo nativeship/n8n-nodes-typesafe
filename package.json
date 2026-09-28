@@ -22,6 +22,11 @@
     "n8n-community-node-package"
   ],
   "license": "MIT",
+  "maintainers": [
+    {
+      "name": "nativeship"
+    }
+  ],
   "n8n": {
     "credentials": [
       "dist/credentials/TypesafeApi.credentials.js"
@@ -52,5 +57,5 @@
     "lint": "n8n-node lint",
     "lint:fix": "n8n-node lint --fix"
   },
-  "version": "1.0.0"
+  "version": "1.0.1"
 }
