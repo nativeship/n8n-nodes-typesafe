@@ -2,7 +2,7 @@
   "dependencyLockSha256": "c117fa2ca55b50f164d9976156638d380ba63dda97e096e7e2a1738e1e7cea93",
   "generator": "native-ship/hybrid-go-ts-morph",
   "generatorVersion": "1.4.0",
-  "irSha256": "6db60c973c786c703356a8f767a4fd350616d671784b67801664d1194ac05b8d",
+  "irSha256": "53a5a925c9be85d5c9847f1184c57eff896ca9a24bb73511c3946ba7bdfc3ef6",
   "packageName": "@nativeship/n8n-nodes-typesafe",
   "runtime": "bun@1.3.14",
   "schemaVersion": 2,

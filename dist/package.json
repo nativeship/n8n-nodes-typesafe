@@ -17,7 +17,7 @@
     "files": [
         "dist"
     ],
-    "homepage": "https://docs.typesafe.ai/primitives?utm_source=n8n_app\u0026utm_medium=node_settings_modal-credential_link\u0026utm_campaign=@nativeship/n8n-nodes-typesafe",
+    "homepage": "https://api.example.com",
     "keywords": [
         "n8n-community-node-package",
         "n8n",

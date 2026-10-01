@@ -28,11 +28,6 @@
     "ai-classification"
   ],
   "license": "MIT",
-  "maintainers": [
-    {
-      "name": "nativeship"
-    }
-  ],
   "n8n": {
     "credentials": [
       "dist/credentials/TypesafeApi.credentials.js"
@@ -45,7 +40,7 @@
   },
   "name": "@nativeship/n8n-nodes-typesafe",
   "nativeShip": {
-    "artifactSha256": "0edb62335e3ecfbfcec529d190efe47a77743e8206ed65dfe4bebe1d19953b7c"
+    "artifactSha256": "c53bb49c61d9c75abd5a70a23c7c2196c5f9ee75641498c642c25d1bc08ecb0c"
   },
   "peerDependencies": {
     "n8n-workflow": "*"
@@ -63,5 +58,5 @@
     "lint": "n8n-node lint",
     "lint:fix": "n8n-node lint --fix"
   },
-  "version": "2.0.1"
+  "version": "3.0.0"
 }

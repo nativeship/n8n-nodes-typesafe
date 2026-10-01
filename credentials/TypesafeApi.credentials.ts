@@ -4,7 +4,7 @@ import { type IAuthenticateGeneric, type Icon, type ICredentialTestRequest, type
 export class TypesafeApi implements ICredentialType {
   name = "typesafeApi";
   displayName = "TypeSafe API";
-  documentationUrl = "https://docs.typesafe.ai/primitives?utm_source=n8n_app&utm_medium=node_settings_modal-credential_link&utm_campaign=@nativeship/n8n-nodes-typesafe";
+  documentationUrl = "https://api.example.com";
   icon: Icon = {
         light: "file:../nodes/Typesafe/typesafe.svg",
         dark: "file:../nodes/Typesafe/typesafe.dark.svg"
@@ -31,7 +31,7 @@ export class TypesafeApi implements ICredentialType {
     };
   test: ICredentialTestRequest = {
         request: {
-            baseURL: "https://api.typesafe.ai",
+            baseURL: "https://api.example.com",
             url: "/v1/models"
         }
     };

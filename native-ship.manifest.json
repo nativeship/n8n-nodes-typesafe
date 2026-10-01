@@ -26,18 +26,105 @@
   "diagnostics": [
     {
       "severity": "warning",
-      "code": "NF_AUTH_UNSUPPORTED",
-      "location": "/security/HTTPBearer",
-      "explanation": "Authentication scheme \"HTTPBearer\" is referenced but not declared; generated credentials use the inferred fallback \"bearer\".",
-      "resolution": "Declare the security scheme explicitly to preserve the provider's exact authentication contract."
+      "code": "NF_SERVER_SELECTION",
+      "location": "/servers",
+      "explanation": "The specification does not declare a server URL; generated routing uses a configurable self-hosted destination.",
+      "resolution": "Set the generated node's HTTPS Destination URL to the API host before executing it."
     }
   ],
   "operationContracts": [
     {
-      "operationId": "evaluateContent",
+      "operationId": "models_v1_v1_models_get",
+      "method": "GET",
+      "path": "/v1/models",
+      "serverId": "selfHosted",
+      "authentication": [
+        {
+          "schemes": [
+            "HTTPBearer"
+          ],
+          "scopes": []
+        }
+      ],
+      "parameters": [],
+      "request": {
+        "contentType": "application/json",
+        "representation": "structured",
+        "fields": []
+      },
+      "retry": {},
+      "pagination": {
+        "style": "none"
+      },
+      "response": {
+        "fields": [
+          {
+            "name": "models",
+            "type": "array"
+          }
+        ],
+        "simplifiedFields": [
+          "models"
+        ]
+      },
+      "errors": [
+        {
+          "status": "422",
+          "title": "Validation Error"
+        }
+      ],
+      "requestPlan": {
+        "operationId": "models_v1_v1_models_get",
+        "method": "GET",
+        "path": "/v1/models",
+        "serverId": "selfHosted",
+        "request": {
+          "method": "GET",
+          "url": "=/v1/models",
+          "query": [],
+          "body": [],
+          "headers": {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+          }
+        },
+        "authentication": [
+          {
+            "schemes": [
+              "HTTPBearer"
+            ],
+            "scopes": []
+          }
+        ],
+        "retry": {},
+        "pagination": {
+          "style": "none"
+        },
+        "response": {
+          "fields": [
+            {
+              "name": "models",
+              "type": "array"
+            }
+          ],
+          "simplifiedFields": [
+            "models"
+          ]
+        },
+        "errors": [
+          {
+            "status": "422",
+            "title": "Validation Error"
+          }
+        ],
+        "unsupportedSemantics": []
+      }
+    },
+    {
+      "operationId": "systemone_v1_systemone_post",
       "method": "POST",
       "path": "/v1/systemone",
-      "serverId": "documentServer1HttpsApiTypesafeAi",
+      "serverId": "selfHosted",
       "authentication": [
         {
           "schemes": [
@@ -99,14 +186,14 @@
       "errors": [
         {
           "status": "422",
-          "title": "Validation Error resulting from an invalid request format."
+          "title": "Validation Error"
         }
       ],
       "requestPlan": {
-        "operationId": "evaluateContent",
+        "operationId": "systemone_v1_systemone_post",
         "method": "POST",
         "path": "/v1/systemone",
-        "serverId": "documentServer1HttpsApiTypesafeAi",
+        "serverId": "selfHosted",
         "request": {
           "method": "POST",
           "url": "=/v1/systemone",
@@ -166,7 +253,7 @@
         "errors": [
           {
             "status": "422",
-            "title": "Validation Error resulting from an invalid request format."
+            "title": "Validation Error"
           }
         ],
         "unsupportedSemantics": [
@@ -174,134 +261,47 @@
           "advanced parameter state"
         ]
       }
-    },
-    {
-      "operationId": "listModels",
-      "method": "GET",
-      "path": "/v1/models",
-      "serverId": "documentServer1HttpsApiTypesafeAi",
-      "authentication": [
-        {
-          "schemes": [
-            "HTTPBearer"
-          ],
-          "scopes": []
-        }
-      ],
-      "parameters": [],
-      "request": {
-        "contentType": "application/json",
-        "representation": "structured",
-        "fields": []
-      },
-      "retry": {},
-      "pagination": {
-        "style": "none"
-      },
-      "response": {
-        "fields": [
-          {
-            "name": "models",
-            "type": "array"
-          }
-        ],
-        "simplifiedFields": [
-          "models"
-        ]
-      },
-      "errors": [
-        {
-          "status": "422",
-          "title": "Validation Error."
-        }
-      ],
-      "requestPlan": {
-        "operationId": "listModels",
-        "method": "GET",
-        "path": "/v1/models",
-        "serverId": "documentServer1HttpsApiTypesafeAi",
-        "request": {
-          "method": "GET",
-          "url": "=/v1/models",
-          "query": [],
-          "body": [],
-          "headers": {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-          }
-        },
-        "authentication": [
-          {
-            "schemes": [
-              "HTTPBearer"
-            ],
-            "scopes": []
-          }
-        ],
-        "retry": {},
-        "pagination": {
-          "style": "none"
-        },
-        "response": {
-          "fields": [
-            {
-              "name": "models",
-              "type": "array"
-            }
-          ],
-          "simplifiedFields": [
-            "models"
-          ]
-        },
-        "errors": [
-          {
-            "status": "422",
-            "title": "Validation Error."
-          }
-        ],
-        "unsupportedSemantics": []
-      }
     }
   ],
   "presentationProfile": {
     "version": 1,
     "title": "TypeSafe",
     "description": "Evaluate content with fast probabilistic checks, classifications, and custom scoring rubrics using TypeSafe AI",
-    "documentationUrl": "https://docs.typesafe.ai/primitives?utm_source=n8n_app&utm_medium=node_settings_modal-credential_link&utm_campaign=@nativeship/n8n-nodes-typesafe",
+    "documentationUrl": "https://api.example.com",
     "artwork": {
       "iconData": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 64 64\" width=\"64\" height=\"64\" role=\"img\" aria-label=\"TypeSafe\">\n  <style>\n    .m {\n      fill: none;\n      stroke: #000;\n      stroke-width: 2.81;\n      stroke-linecap: round;\n      stroke-linejoin: round;\n    }\n  </style>\n  <g class=\"m\">\n    <path d=\"M11.22 14L32 2\"/>\n    <path d=\"M21.61 20L32 14\"/>\n    <path d=\"M11.22 38L21.61 32\"/>\n    <path d=\"M32 26L42.39 20\"/>\n    <path d=\"M21.61 44L32 38\"/>\n    <path d=\"M21.61 56L42.39 44\"/>\n    <path d=\"M32 62L52.78 50\"/>\n    <path d=\"M32 2L42.39 8\"/>\n    <path d=\"M32 14L52.78 26\"/>\n    <path d=\"M21.61 20L32 26\"/>\n    <path d=\"M21.61 32L32 38\"/>\n    <path d=\"M42.39 44L52.78 50\"/>\n    <path d=\"M11.22 38L21.61 44\"/>\n    <path d=\"M21.61 56L32 62\"/>\n    <path d=\"M52.78 26L52.78 50\"/>\n    <path d=\"M42.39 8L42.39 44\"/>\n    <path d=\"M32 2L32 14\"/>\n    <path d=\"M32 26L32 38\"/>\n    <path d=\"M21.61 20L21.61 32\"/>\n    <path d=\"M21.61 44L21.61 56\"/>\n    <path d=\"M11.22 14L11.22 38\"/>\n  </g>\n</svg>",
       "iconDarkData": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 64 64\" width=\"64\" height=\"64\" role=\"img\" aria-label=\"TypeSafe\">\n  <style>\n    .m {\n      fill: none;\n      stroke: #fff;\n      stroke-width: 2.81;\n      stroke-linecap: round;\n      stroke-linejoin: round;\n    }\n  </style>\n  <g class=\"m\">\n    <path d=\"M11.22 14L32 2\"/>\n    <path d=\"M21.61 20L32 14\"/>\n    <path d=\"M11.22 38L21.61 32\"/>\n    <path d=\"M32 26L42.39 20\"/>\n    <path d=\"M21.61 44L32 38\"/>\n    <path d=\"M21.61 56L42.39 44\"/>\n    <path d=\"M32 62L52.78 50\"/>\n    <path d=\"M32 2L42.39 8\"/>\n    <path d=\"M32 14L52.78 26\"/>\n    <path d=\"M21.61 20L32 26\"/>\n    <path d=\"M21.61 32L32 38\"/>\n    <path d=\"M42.39 44L52.78 50\"/>\n    <path d=\"M11.22 38L21.61 44\"/>\n    <path d=\"M21.61 56L32 62\"/>\n    <path d=\"M52.78 26L52.78 50\"/>\n    <path d=\"M42.39 8L42.39 44\"/>\n    <path d=\"M32 2L32 14\"/>\n    <path d=\"M32 26L32 38\"/>\n    <path d=\"M21.61 20L21.61 32\"/>\n    <path d=\"M21.61 44L21.61 56\"/>\n    <path d=\"M11.22 14L11.22 38\"/>\n  </g>\n</svg>"
     },
     "resources": {
-      "v1": {
+      "models": {
         "source": {
-          "name": "v1"
+          "name": "models"
         },
         "displayName": "Evaluation & Models"
       }
     },
     "operations": {
-      "evaluateContent": {
+      "models_v1_v1_models_get": {
         "source": {
-          "id": "evaluateContent",
+          "id": "models_v1_v1_models_get",
+          "method": "GET",
+          "path": "/v1/models"
+        },
+        "displayName": "Get Many Models",
+        "description": "Returns the models and aliases your account can use.",
+        "hidden": false,
+        "resource": "models"
+      },
+      "systemone_v1_systemone_post": {
+        "source": {
+          "id": "systemone_v1_systemone_post",
           "method": "POST",
           "path": "/v1/systemone"
         },
         "displayName": "Ask Questions",
-        "description": "Evaluate provided content (state) by asking one or more questions. You can mix question types (yes/no, multiple-choice, or scoring) in a single request. The answers are returned mapped to your specific question keys.",
+        "description": "Tests your input text against yes/no questions, multiple-choice options, or custom score levels",
         "hidden": false,
-        "resource": "v1"
-      },
-      "listModels": {
-        "source": {
-          "id": "listModels",
-          "method": "GET",
-          "path": "/v1/models"
-        },
-        "displayName": "List Models",
-        "description": "Retrieve a list of all available AI models and their metadata for your authenticated account. Use the returned model names in the Evaluate Content action.",
-        "hidden": false,
-        "resource": "v1"
+        "resource": "models"
       }
     },
     "credentials": {
@@ -310,6 +310,36 @@
           "id": "HTTPBearer",
           "type": "bearer"
         }
+      }
+    },
+    "bodyFields": {
+      "systemone_v1_systemone_post.model": {
+        "source": {
+          "operationId": "systemone_v1_systemone_post",
+          "name": "model",
+          "type": "string",
+          "required": true
+        },
+        "placeholder": "jev-latest"
+      },
+      "systemone_v1_systemone_post.questions": {
+        "source": {
+          "operationId": "systemone_v1_systemone_post",
+          "name": "questions",
+          "type": "object",
+          "required": true
+        },
+        "hint": "The raw text, email, or message you want the model to inspect.",
+        "placeholder": "e.g. I was charged twice for my subscription. Please help!"
+      },
+      "systemone_v1_systemone_post.state": {
+        "source": {
+          "operationId": "systemone_v1_systemone_post",
+          "name": "state",
+          "type": "alternative",
+          "required": true
+        },
+        "description": "You can add multiple questions of different types (Yes/No, Multiple Choice, or Score) in a single run"
       }
     }
   }

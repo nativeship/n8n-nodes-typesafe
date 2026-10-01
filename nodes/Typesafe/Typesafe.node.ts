@@ -16,6 +16,7 @@ type BodyFieldContract = {
   name: string;
   displayName?: string;
   description?: string;
+  placeholder?: string;
   type?: string;
   format?: string;
   required?: boolean;
@@ -164,12 +165,12 @@ export class Typesafe implements INodeType {
         version: [
             1
         ],
-        subtitle: "={{$parameter[\"operation\"] + \": \" + $parameter[\"resource\"]}}",
+        subtitle: "={{((JSON.parse(\"\\u007b\\\"models\\\":\\u007b\\\"models_v1_v1_models_get\\\":\\\"getManyModels: evaluationModel\\\",\\\"systemone_v1_systemone_post\\\":\\\"askQuestions: evaluationModel\\\"\\u007d\\u007d\"))[$parameter[\"resource\"]] || {})[$parameter[\"operation\"]] || ($parameter[\"operation\"] + \": \" + $parameter[\"resource\"])}}",
         description: "Evaluate content with fast probabilistic checks, classifications, and custom scoring rubrics using TypeSafe AI",
-        documentationUrl: "https://docs.typesafe.ai/primitives?utm_source=n8n_app&utm_medium=node_settings_modal-credential_link&utm_campaign=@nativeship/n8n-nodes-typesafe",
+        documentationUrl: "https://api.example.com",
         hints: [
             {
-                message: "Authentication scheme \"HTTPBearer\" is referenced but not declared; generated credentials use the inferred fallback \"bearer\". Declare the security scheme explicitly to preserve the provider's exact authentication contract.",
+                message: "The specification does not declare a server URL; generated routing uses a configurable self-hosted destination. Set the generated node's HTTPS Destination URL to the API host before executing it.",
                 type: "warning",
                 location: "inputPane",
                 whenToDisplay: "always"
@@ -197,11 +198,11 @@ export class Typesafe implements INodeType {
                 name: "resource",
                 type: "options",
                 noDataExpression: true,
-                default: "v1",
+                default: "models",
                 options: [
                     {
                         name: "Evaluation & Model",
-                        value: "v1"
+                        value: "models"
                     }
                 ]
             },
@@ -213,23 +214,51 @@ export class Typesafe implements INodeType {
                 displayOptions: {
                     show: {
                         resource: [
-                            "v1"
+                            "models"
                         ]
                     }
                 },
-                default: "evaluateContent",
+                default: "models_v1_v1_models_get",
                 options: [
                     {
                         name: "Ask Questions",
-                        value: "evaluateContent",
+                        value: "systemone_v1_systemone_post",
                         action: "Ask questions evaluation models",
-                        description: "Evaluate provided content (state) by asking one or more questions. you can mix question types (yes/no, multiple-choice, or scoring) in a single request. the answers are returned mapped to your specific question keys. evaluation & models."
+                        description: "Tests your input text against yes/no questions, multiple-choice options, or custom score levels. evaluation & models."
                     },
                     {
-                        name: "List Models",
-                        value: "listModels",
-                        action: "List models evaluation models",
-                        description: "Retrieve a list of all available ai models and their metadata for your authenticated account. use the returned model names in the evaluate content action. evaluation & models."
+                        name: "Get Many Models",
+                        value: "models_v1_v1_models_get",
+                        action: "Get many models evaluation models",
+                        description: "Returns the models and aliases your account can use. evaluation & models."
+                    }
+                ]
+            },
+            {
+                displayName: "Options",
+                name: "options",
+                type: "collection",
+                placeholder: "Add Option",
+                default: {},
+                displayOptions: {
+                    show: {
+                        resource: [
+                            "models"
+                        ],
+                        operation: [
+                            "models_v1_v1_models_get"
+                        ]
+                    }
+                },
+                options: [
+                    {
+                        displayName: "Destination URL",
+                        name: "server_selfHosted_baseUrl",
+                        type: "string",
+                        default: "https://api.example.com",
+                        description: "HTTPS destination URL for the API",
+                        placeholder: "https://api.example.com",
+                        validateType: "url"
                     }
                 ]
             },
@@ -239,14 +268,15 @@ export class Typesafe implements INodeType {
                 type: "string",
                 default: "",
                 required: true,
-                description: "The specified system one model or alias responsible for evaluation (e.g., 'jev-latest'). you can find valid models via the list models operation.",
+                description: "Name or alias of the model to use. available names are returned by get /v1/models.",
+                placeholder: "jev-latest",
                 displayOptions: {
                     show: {
                         resource: [
-                            "v1"
+                            "models"
                         ],
                         operation: [
-                            "evaluateContent"
+                            "systemone_v1_systemone_post"
                         ]
                     }
                 }
@@ -257,14 +287,16 @@ export class Typesafe implements INodeType {
                 type: "json",
                 default: {},
                 required: true,
-                description: "A dictionary object of the questions you want to ask. the keys you define here (e.g., 'is_security_risk') will be used in the response payload to map back the answers.",
+                description: "Questions to ask about the content, each with a name you choose. the response uses those names to identify the answers.",
+                placeholder: "e.g. I was charged twice for my subscription. Please help!",
+                hint: "The raw text, email, or message you want the model to inspect.",
                 displayOptions: {
                     show: {
                         resource: [
-                            "v1"
+                            "models"
                         ],
                         operation: [
-                            "evaluateContent"
+                            "systemone_v1_systemone_post"
                         ]
                     }
                 }
@@ -278,17 +310,45 @@ export class Typesafe implements INodeType {
                     value: ""
                 },
                 required: true,
-                description: "The raw data, text, or content that all requested questions will be evaluated against. structured JSON is supported.",
+                description: "You can add multiple questions of different types (yes/no, multiple choice, or score) in a single run",
                 displayOptions: {
                     show: {
                         resource: [
-                            "v1"
+                            "models"
                         ],
                         operation: [
-                            "evaluateContent"
+                            "systemone_v1_systemone_post"
                         ]
                     }
                 }
+            },
+            {
+                displayName: "Options",
+                name: "options",
+                type: "collection",
+                placeholder: "Add Option",
+                default: {},
+                displayOptions: {
+                    show: {
+                        resource: [
+                            "models"
+                        ],
+                        operation: [
+                            "systemone_v1_systemone_post"
+                        ]
+                    }
+                },
+                options: [
+                    {
+                        displayName: "Destination URL",
+                        name: "server_selfHosted_baseUrl",
+                        type: "string",
+                        default: "https://api.example.com",
+                        description: "HTTPS destination URL for the API",
+                        placeholder: "https://api.example.com",
+                        validateType: "url"
+                    }
+                ]
             }
         ]
     };
@@ -311,28 +371,7 @@ export class Typesafe implements INodeType {
         let pagination: PaginationContract = { style: 'none', advancement: '', maxPages: 1, maxItems: Number.POSITIVE_INFINITY, maxElapsedMs: 30000, maxMemoryBytes: 10 * 1024 * 1024, repeatedCursorLimit: 1, repeatedPageLimit: 1, pageSize: 100 };
         let responsePlan: { binary: boolean; full: boolean; envelopePath: string; itemPath: string; fields: string[]; simplified: string[] } = { binary: false, full: false, envelopePath: "", itemPath: "", fields: [], simplified: [] };
         switch (operation) {
-          case "evaluateContent": {
-        
-        
-        const path = "/v1/systemone";
-        const qs: IDataObject = {};
-        const headers: IDataObject = {};
-        const body: IDataObject | IDataObject[] | string | number | boolean | null = {};
-        
-        setBodyField(body as IDataObject, {"name":"model","displayName":"Model","type":"string","required":true,"description":"The specified System One model or alias responsible for evaluation (e.g., 'jev-latest'). You can find valid models via the List Models operation."}, this.getNodeParameter("model", itemIndex), this, itemIndex);
-    setBodyField(body as IDataObject, {"name":"questions","displayName":"Questions","type":"object","required":true,"description":"A dictionary object of the questions you want to ask. The keys you define here (e.g., 'is_security_risk') will be used in the response payload to map back the answers.","additionalValue":{"name":"value","displayName":"Value","type":"alternative","description":"A specific evaluation task (noul, choice, or score) applied to the provided content.","alternatives":[{"name":"alternative1","displayName":"Alternative1","type":"string"},{"name":"alternative2","displayName":"Alternative2","type":"string"},{"name":"alternative3","displayName":"Alternative3","type":"string"}],"composition":"oneOf","representation":"raw"},"representation":"raw"}, this.getNodeParameter("questions", itemIndex), this, itemIndex);
-    setBodyField(body as IDataObject, {"name":"state","displayName":"State","type":"alternative","required":true,"description":"The raw data, text, or content that all requested questions will be evaluated against. Structured JSON is supported.","alternatives":[{"name":"alternative1","displayName":"Alternative1","type":"string"},{"name":"alternative2","displayName":"Alternative2","type":"object","additionalValue":{"name":"value","displayName":"Value","type":"any"},"representation":"raw"},{"name":"alternative3","displayName":"Alternative3","type":"array","items":{"name":"item","displayName":"Item","type":"string"},"representation":"raw"}],"composition":"anyOf","representation":"raw"}, this.getNodeParameter("state", itemIndex), this, itemIndex);
-        
-        const serverBaseUrl = resolveServerBaseUrl(this as never, [{"id":"documentServer1HttpsApiTypesafeAi","url":"https://api.typesafe.ai","kind":"selectable","variables":[]}], "documentServer1HttpsApiTypesafeAi", nodeOptions, false);
-        options = { method: "POST" as unknown as IHttpRequestOptions["method"], url: serverBaseUrl.url + path, qs, headers: { ...headers, ...{ 'Content-Type': "application/json" } }, body: body, json: true, arrayFormat: "indices", ...(serverBaseUrl.blockRedirects ? { maxRedirects: 0 } : {}) };
-        credentialApplications = ([{"credentialType":"typesafeApi","type":"bearer"}]) as CredentialApplication[];
-        retryContract = { mode: "none", retryConnectionFailures: false, retryTimeouts: false, retryRateLimits: false, retryServerErrors: false, maxAttempts: 1, maxElapsedMs: 30000, baseBackoffMs: 500, maxBackoffMs: 5000, jitterRatio: 0.2, idempotency: undefined };
-        pagination = { style: "none", page: "", limit: "", cursor: "", responseCursor: "", hasMore: "", itemPath: "", advancement: "", maxPages: 1, maxItems: Number.POSITIVE_INFINITY, maxElapsedMs: 30000, maxMemoryBytes: 10485760, repeatedCursorLimit: 1, repeatedPageLimit: 1, pageSize: 100 };
-        responsePlan = { binary: false, full: false, envelopePath: "", itemPath: "", fields: ["answers","model","usage"], simplified: ["answers","model","usage"] };
-        errorPlan = {"422":{"title":"Validation Error resulting from an invalid request format."}};
-        break;
-      }
-    case "listModels": {
+          case "models_v1_v1_models_get": {
         
         
         const path = "/v1/models";
@@ -342,13 +381,34 @@ export class Typesafe implements INodeType {
         
         
         
-        const serverBaseUrl = resolveServerBaseUrl(this as never, [{"id":"documentServer1HttpsApiTypesafeAi","url":"https://api.typesafe.ai","kind":"selectable","variables":[]}], "documentServer1HttpsApiTypesafeAi", nodeOptions, false);
+        const serverBaseUrl = resolveServerBaseUrl(this as never, [{"id":"selfHosted","url":"{baseUrl}","kind":"selfHosted","variables":[{"name":"baseUrl","default":"https://api.example.com","enum":[]}]}], "selfHosted", nodeOptions, false);
         options = { method: "GET" as unknown as IHttpRequestOptions["method"], url: serverBaseUrl.url + path, qs, body: body, json: true, arrayFormat: "indices", ...(serverBaseUrl.blockRedirects ? { maxRedirects: 0 } : {}) };
         credentialApplications = ([{"credentialType":"typesafeApi","type":"bearer"}]) as CredentialApplication[];
         retryContract = { mode: "none", retryConnectionFailures: false, retryTimeouts: false, retryRateLimits: false, retryServerErrors: false, maxAttempts: 1, maxElapsedMs: 30000, baseBackoffMs: 500, maxBackoffMs: 5000, jitterRatio: 0.2, idempotency: undefined };
         pagination = { style: "none", page: "", limit: "", cursor: "", responseCursor: "", hasMore: "", itemPath: "", advancement: "", maxPages: 1, maxItems: Number.POSITIVE_INFINITY, maxElapsedMs: 30000, maxMemoryBytes: 10485760, repeatedCursorLimit: 1, repeatedPageLimit: 1, pageSize: 100 };
         responsePlan = { binary: false, full: false, envelopePath: "", itemPath: "", fields: ["models"], simplified: ["models"] };
-        errorPlan = {"422":{"title":"Validation Error."}};
+        errorPlan = {"422":{"title":"Validation Error"}};
+        break;
+      }
+    case "systemone_v1_systemone_post": {
+        
+        
+        const path = "/v1/systemone";
+        const qs: IDataObject = {};
+        const headers: IDataObject = {};
+        const body: IDataObject | IDataObject[] | string | number | boolean | null = {};
+        
+        setBodyField(body as IDataObject, {"name":"model","displayName":"Model","description":"Name or alias of the model to use. Available names are returned by GET /v1/models.","placeholder":"jev-latest","type":"string","required":true}, this.getNodeParameter("model", itemIndex), this, itemIndex);
+    setBodyField(body as IDataObject, {"name":"questions","displayName":"Questions","description":"Questions to ask about the content, each with a name you choose. The response uses those names to identify the answers.","placeholder":"e.g. I was charged twice for my subscription. Please help!","type":"object","required":true,"representation":"raw","additionalValue":{"name":"value","displayName":"Value","description":"A question about the supplied content.","type":"alternative","composition":"oneOf","representation":"raw","alternatives":[{"name":"alternative1","displayName":"Alternative1","type":"string"},{"name":"alternative2","displayName":"Alternative2","type":"string"},{"name":"alternative3","displayName":"Alternative3","type":"string"}]}}, this.getNodeParameter("questions", itemIndex), this, itemIndex);
+    setBodyField(body as IDataObject, {"name":"state","displayName":"State","description":"You can add multiple questions of different types (Yes/No, Multiple Choice, or Score) in a single run","type":"alternative","required":true,"composition":"anyOf","representation":"raw","alternatives":[{"name":"alternative1","displayName":"Alternative1","type":"string"},{"name":"alternative2","displayName":"Alternative2","type":"object","representation":"raw","additionalValue":{"name":"value","displayName":"Value","type":"any"}},{"name":"alternative3","displayName":"Alternative3","type":"array","representation":"raw","items":{"name":"item","displayName":"Item","type":"string"}}]}, this.getNodeParameter("state", itemIndex), this, itemIndex);
+        
+        const serverBaseUrl = resolveServerBaseUrl(this as never, [{"id":"selfHosted","url":"{baseUrl}","kind":"selfHosted","variables":[{"name":"baseUrl","default":"https://api.example.com","enum":[]}]}], "selfHosted", nodeOptions, false);
+        options = { method: "POST" as unknown as IHttpRequestOptions["method"], url: serverBaseUrl.url + path, qs, headers: { ...headers, ...{ 'Content-Type': "application/json" } }, body: body, json: true, arrayFormat: "indices", ...(serverBaseUrl.blockRedirects ? { maxRedirects: 0 } : {}) };
+        credentialApplications = ([{"credentialType":"typesafeApi","type":"bearer"}]) as CredentialApplication[];
+        retryContract = { mode: "none", retryConnectionFailures: false, retryTimeouts: false, retryRateLimits: false, retryServerErrors: false, maxAttempts: 1, maxElapsedMs: 30000, baseBackoffMs: 500, maxBackoffMs: 5000, jitterRatio: 0.2, idempotency: undefined };
+        pagination = { style: "none", page: "", limit: "", cursor: "", responseCursor: "", hasMore: "", itemPath: "", advancement: "", maxPages: 1, maxItems: Number.POSITIVE_INFINITY, maxElapsedMs: 30000, maxMemoryBytes: 10485760, repeatedCursorLimit: 1, repeatedPageLimit: 1, pageSize: 100 };
+        responsePlan = { binary: false, full: false, envelopePath: "", itemPath: "", fields: ["answers","model","usage"], simplified: ["answers","model","usage"] };
+        errorPlan = {"422":{"title":"Validation Error"}};
         break;
       }
           default: throw new NodeOperationError(this.getNode(), `Unsupported operation ${operation} for node version ${nodeVersion}`, { itemIndex });
